@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model carros {
+  id_carro Int @id @default(autoincrement()) @unique
+  ano String
+  modelo String 
+  fabricacao String
+  marca String
+  motor String
+  compras compras[]
+}
+
+model compras {
+  id_compra Int @id @default(autoincrement()) @unique
+  id_usuario Int 
+  cpf_comprador String 
+  valor Float
+  id_contrato Int
+  endereco_meta_comprador String
+  endereco_meta_vendedor String
+  data DateTime
+  status String
+  id_imovel Int
+  endereco_bloco_compra String
+  id_carro Int
+  tipo Int
+  user usuarios @relation(fields: [id_usuario], references: [id_usuarios])
+  contract contratos @relation(fields: [id_contrato], references: [id_contrato])
+  imovel imovel @relation(fields: [id_imovel],references: [id_patrimonio])
+  carros carros @relation(fields: [id_carro],references: [id_carro])
+}
+
+model contratos {
+  id_contrato Int @id @default(autoincrement()) @unique
+  endereco_contrato String @unique
+  compras compras[]
+}
+
+model imovel {
+  id_patrimonio Int @id @default(autoincrement()) @unique
+  valor Float
+  endereco String
+  metros_quadrados String
+  metros_quadrados_construidos String
+  descricao String
+  id_proprietario Int
+  user usuarios @relation(fields:[id_proprietario], references: [id_usuarios])
+  compras compras[]
+}
+
+model usuarios {
+  id_usuarios Int @id @default(autoincrement()) @unique
+  usuario String @unique  
+  nome String 
+  cpf String @unique
+  email String @unique
+  data_nascimento String 
+  endereco String 
+  endereco_meta_mask String @unique
+  compras compras[]
+  imovel imovel[]
+  vendas vendas[]
+}
+
+model vendas {
+  id_venda Int @id @default(autoincrement()) @unique
+  id_vendedor Int
+  cpf_vendedor String
+  valor Float
+  endereco_contrato String
+  endereco_meta_comprador String
+  endereco_meta_vendedor String
+  data DateTime
+  status String
+  id_patrimonio  Int
+  endereco_bloco_compra String
+  user usuarios @relation(fields: [id_vendedor], references: [id_usuarios])
+}
