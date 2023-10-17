@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getVendasById, postVenda } from "../services/vendas.js"
+import { getVendasById, postVenda, atualizaStatusVenda } from "../services/vendas.js"
 
 const router = Router();
 
@@ -20,5 +20,15 @@ router.post("/", async(req, res, prox) => {
         console.log(err);
     }
 });
+
+router.put("/", async(req,res,prox) => {
+    try {
+        const data = await atualizaStatusVenda(req.body);
+        res.status(200).json(data);
+        
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 export default router;

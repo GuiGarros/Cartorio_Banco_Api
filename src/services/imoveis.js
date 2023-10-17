@@ -21,3 +21,12 @@ export async function postImovel(json) {
         throw Error(err);
     }
 }
+
+export async function updateImovel(ids) {
+    try {
+        const imovel = await prisma.imovel.findUnique({where:{id_patrimonio:ids.id_patrimonio}});
+        return await prisma.imovel.update({where:{id_patrimonio:ids.id_patrimonio},data:{...imovel,id_proprietario:ids.id_comprador}})
+    } catch (err) {
+        throw Error(err);
+    }
+}
