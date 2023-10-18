@@ -22,3 +22,12 @@ export async function getUsuarioById(usuario) {
     }
 }
 
+export async function getUsuarioPerMeta(meta) {
+    try {
+        console.log(typeof(meta));
+        return await prisma.usuarios.findUnique({where:{endereco_meta_mask:meta}});
+    } catch (err) {
+        throw Error(err);
+    }
+}
+

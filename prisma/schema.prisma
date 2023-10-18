@@ -22,7 +22,6 @@ model carros {
 model contratos {
   id_contrato Int @id @default(autoincrement()) @unique
   endereco_contrato String @unique
-  compras compras[]
 }
 
 model imovel {
@@ -52,15 +51,12 @@ model usuarios {
 model vendas {
   id_venda Int @id @default(autoincrement()) @unique
   id_vendedor Int
-  cpf_vendedor String
-  valor Float
+  valor String
   endereco_contrato String
   endereco_meta_comprador String
   endereco_meta_vendedor String
-  data DateTime
   status String
   id_patrimonio  Int
-  endereco_bloco_compra String
   titulo String?
   descricao String?
   user usuarios @relation(fields: [id_vendedor], references: [id_usuarios])
@@ -68,21 +64,15 @@ model vendas {
 
 model compras {
   id_compra Int @id @default(autoincrement()) @unique
-  id_usuario Int 
-  cpf_comprador String 
-  valor Float
-  id_contrato Int
+  id_usuario Int
+  valor String
+  endereco_contrato String
   endereco_meta_comprador String
   endereco_meta_vendedor String
-  data DateTime
   status String
   id_imovel Int
-  endereco_bloco_compra String
-  id_carro Int
-  tipo Int
   titulo String?
   descricao String?
   user usuarios @relation(fields: [id_usuario], references: [id_usuarios])
-  contract contratos @relation(fields: [id_contrato], references: [id_contrato])
   imovel imovel @relation(fields: [id_imovel],references: [id_patrimonio])
 }

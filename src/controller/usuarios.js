@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllUsers, adicionarUsuario, getUsuarioById } from "../services/usuario.js"
+import { getAllUsers, adicionarUsuario, getUsuarioById,getUsuarioPerMeta } from "../services/usuario.js"
 
 const router = Router();
 
@@ -31,5 +31,16 @@ router.get("/:usuario", async(req, res, prox) =>{
         console.log(err);
     }
 });
+
+router.get("/meta/:meta", async(req,res,prox) => {
+    try {
+        console.log(req.params.meta);
+        const data = await getUsuarioPerMeta(req.params.meta);
+        console.log(data);
+        res.status(200).json(data);
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 export default router

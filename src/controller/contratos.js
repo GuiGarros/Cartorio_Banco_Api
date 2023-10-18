@@ -13,7 +13,7 @@ router.get("/:contractid", async(req,res,prox) => {
 
 router.post("/", async(req,res,prox) => {
     try {
-        const data = await postContrato();
+        const data = await postContrato(req.body);
         res.status(200).json(data);
     } catch (err) {
         console.log(err);
