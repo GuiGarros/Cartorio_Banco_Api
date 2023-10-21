@@ -31,3 +31,13 @@ export async function getUsuarioPerMeta(meta) {
     }
 }
 
+export async function atualizaEmail(dados) {
+    try {
+        console.log(dados);
+        const usuario = await prisma.usuarios.findUnique({where:{id_usuarios:dados.id_usuarios}});
+        console.log(usuario);
+        return await prisma.usuarios.update({where:{id_usuarios:dados.id_usuarios},data:{...usuario,email:dados.email}});
+    } catch (error) {
+        throw Error(error);
+    }
+}

@@ -36,7 +36,7 @@ model imovel {
 
 model usuarios {
   id_usuarios Int @id @default(autoincrement()) @unique
-  usuario String @unique  
+  usuario String @unique 
   nome String 
   cpf String @unique
   email String @unique
@@ -52,6 +52,7 @@ model vendas {
   id_venda Int @id @default(autoincrement()) @unique
   id_vendedor Int
   valor String
+  endereco String
   endereco_contrato String
   endereco_meta_comprador String
   endereco_meta_vendedor String
@@ -65,7 +66,9 @@ model vendas {
 model compras {
   id_compra Int @id @default(autoincrement()) @unique
   id_usuario Int
+  id_venda Int
   valor String
+  endereco String
   endereco_contrato String
   endereco_meta_comprador String
   endereco_meta_vendedor String

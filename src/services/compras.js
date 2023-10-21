@@ -21,9 +21,19 @@ export async function postCompra(json){
 
 export async function atualizaStatusCompra(status) {
     try {
-        console.log(status);
         const compra = await prisma.compras.findUnique({where:{id_compra:status.id_compra}});
         return await prisma.compras.update({where:{id_compra:status.id_compra},data:{...compra,status:status.status_compra}});
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
+export async function cancelaCompra(dados) {
+    try {
+        console.log(dados);
+        const compra = await prisma.compras.findFirst({where:{id_venda:dados.id_venda}});
+        console.log(compra);
+        return await prisma.compras.update({where:{id_compra:compra.id_compra}, data:{...compra,status:dados.status_compra}});
     } catch (error) {
         throw Error(error);
     }

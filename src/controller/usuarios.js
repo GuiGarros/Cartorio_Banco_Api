@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllUsers, adicionarUsuario, getUsuarioById,getUsuarioPerMeta } from "../services/usuario.js"
+import { getAllUsers, adicionarUsuario, getUsuarioById,getUsuarioPerMeta,atualizaEmail } from "../services/usuario.js"
 
 const router = Router();
 
@@ -14,7 +14,6 @@ router.get("/", async(req, res, prox) => {
 
 router.post("/", async(req, res, prox) => {
     try{
-        console.log(req.body)
         const data = await adicionarUsuario(req.body);
         res.status(200).json(data);
     } catch(err) {
@@ -24,7 +23,6 @@ router.post("/", async(req, res, prox) => {
 
 router.get("/:usuario", async(req, res, prox) =>{
     try {
-        console.log(req.params.usuario);
         const data = await getUsuarioById(req.params.usuario);
         res.status(200).json(data);
     } catch(err) {
@@ -34,9 +32,16 @@ router.get("/:usuario", async(req, res, prox) =>{
 
 router.get("/meta/:meta", async(req,res,prox) => {
     try {
-        console.log(req.params.meta);
         const data = await getUsuarioPerMeta(req.params.meta);
-        console.log(data);
+        res.status(200).json(data);
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+router.put("/",async(req,res,prox) => {
+    try {
+        const data = await atualizaEmail(req.body);
         res.status(200).json(data);
     } catch (err) {
         console.log(err);

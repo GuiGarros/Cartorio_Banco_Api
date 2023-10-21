@@ -6,7 +6,6 @@ const router = Router();
 router.get("/:userid", async(req,res,prox) => {
     try {
         const data = await getUsuarioImoveis(req.params.userid);
-        console.log(data);
         res.status(200).json(data);
     } catch(err) {
         console.log(err);
